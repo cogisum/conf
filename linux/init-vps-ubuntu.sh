@@ -40,6 +40,17 @@ apt install -y tmux
 apt install -y trash-cli
 apt install -y git
 
+if ! command -v python2 &>/dev/null; then
+    apt install python2
+    update-alternatives --install /usr/bin/python2 python2 /usr/bin/python2 10
+fi
+if ! command -v python3 &>/dev/null; then
+    apt install python3
+    if ! command -v python &>/dev/null; then
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+    fi
+fi
+
 export pub_key
 su - $user -w pub_key -c '
 # ssh key
