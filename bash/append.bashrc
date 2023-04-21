@@ -10,6 +10,11 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+function proxy() {
+    local PROXY="http://127.0.0.1:12333"
+    http_proxy="$PROXY" https_proxy="$PROXY" "$@"
+}
+
 # colored GCC warnings and errors
 # some more ls aliases
 alias ll='ls -alF'
