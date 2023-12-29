@@ -11,12 +11,18 @@ pub_key="$2"
 
 continue_or_exit() {
     local msg="$1"
-    echo "$msg, press Y/y to continue: " 
+    echo -n "$msg, press Y/y to continue: "
     read -n1 rsp
     if [ "x$rsp" != xY -a "x$rsp" != xy ]; then
         exit 2
     fi
 }
+
+if id -u $user &>/dev/null; then
+    user_exist=1
+else
+    user_exist=0
+fi
 
 if [ -z "$user" ]; then
     usage
@@ -27,7 +33,7 @@ if [ -z "$pub_key" ]; then
 fi
 
 # create user account
-if [ -n $user ]; then
+if [ $user_exist -eq 0 ]; then
     useradd -m -s /bin/bash $user
     passwd $user
     usermod -aG sudo $user
@@ -42,7 +48,6 @@ apt install -y git
 
 if ! command -v python2 &>/dev/null; then
     apt install python2
-    update-alternatives --install /usr/bin/python2 python2 /usr/bin/python2 10
 fi
 if ! command -v python3 &>/dev/null; then
     apt install python3
