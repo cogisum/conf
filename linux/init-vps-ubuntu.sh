@@ -41,8 +41,9 @@ fi
 
 # install packages
 apt update
-apt install -y vim
+apt install -y vim-gtk3
 apt install -y tmux
+apt install -y xsel
 apt install -y trash-cli
 apt install -y git
 
